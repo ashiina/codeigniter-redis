@@ -179,6 +179,71 @@ class Redis {
 	}
 	
 	/**
+	 * Add member $member into set with key $key 
+	 * @param	string 	key of the set
+	 * @param	string 	member to add
+	 * @return 	string 
+	 */
+	public function sadd($key, $member)
+	{
+		
+		$request = $this->_encode_request('SADD ' . $key . ' ' . $member);
+		return $this->_write_request($request);
+		
+	}
+	
+	/**
+	 * Gets members stored in set with key $key
+	 * @param	string 	key of the set
+	 * @return 	array 	members of the set
+	 */
+	public function smembers($key)
+	{
+		$request = $this->_encode_request('SMEMBERS ' . $key);
+		return $this->_write_request($request);
+		
+	}
+	
+	/**
+	 * Remove member for set $key
+	 * @param	string 	key of the set
+	 * @param	string 	member to remove
+	 * @return	string
+	 */
+	public function srem($key, $member)
+	{
+		$request = $this->_encode_request('SREM ' . $key . ' ' . $member);
+		return $this->_write_request($request);
+		
+	}
+
+	/**
+	 * Get total number of members in set $key
+	 * @param	string 	key of the set
+	 * @return 	string 	number of members of the set
+	 */
+	public function scard($key)
+	{
+		$request = $this->_encode_request('SCARD ' . $key );
+		return $this->_write_request($request);
+		
+	}
+
+	/**
+	 * Check if $member is a member for set $key
+	 * @param	string 	key of the set
+	 * @param	string 	member to check
+	 * @return	string
+	 */
+	public function sismember($key, $member)
+	{
+		$request = $this->_encode_request('SISMEMBER ' . $key . ' ' . $member);
+		return $this->_write_request($request);
+		
+	}
+
+	
+	/**
 	 * Connection, reading and writing
 	 */
 	

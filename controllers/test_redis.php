@@ -49,6 +49,26 @@ class Test_redis extends CI_Controller {
 		$this->unit->run($this->redis->keys('key*'),  array('key2', 'key'), 'Get all keys matching "key"');
 		$this->redis->del('key key2');
 
+		// SADD
+		$this->unit->run($this->redis->sadd('test.set.1', 'val'), 1, 'Add member to set');
+
+		// SREM
+		$this->unit->run($this->redis->srem('test.set.1', 'val'), 1, 'Delete member from set');
+
+		$this->redis->sadd('test.set.1', 'val1');
+		$this->redis->sadd('test.set.1', 'val2');
+		$this->redis->sadd('test.set.1', 'val3');
+
+		// SMEMBERS
+		$this->unit->run($this->redis->smembers('test.set.1'), array('val1','val2','val3'), 'Get all members of set "test.set.1"');
+
+		// SCARD
+		$this->unit->run($this->redis->scard('test.set.1'), 3, 'Get number of members of set "test.set.1"');
+
+		// SISMEMBER
+		$this->unit->run($this->redis->sismember('test.set.1', 'val4'), 0, 'Check if "val4" is a member of set "test.set.1"');
+		$this->unit->run($this->redis->sismember('test.set.1', 'val2'), 1, 'Check if "val2" is a member of set "test.set.1"');
+
 		// Display all results
 		echo $this->unit->report();
 		
